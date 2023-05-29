@@ -11,7 +11,7 @@ export default function Dashboard() {
 
   return (
     <>
-      <section className='min-h-screen flex flex-col sm:flex-row gap-1'>
+      <section className='min-h-screen flex flex-col sm:flex-row gap-1 bg-slate-100'>
         <nav>
           <ul className='sm:w-48 bg-red-300'>
             <li className='text-center py-4 bg-primary text-white'>

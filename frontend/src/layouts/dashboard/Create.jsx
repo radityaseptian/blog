@@ -11,7 +11,7 @@ export default function Create() {
   return (
     <>
       <nav>
-        <ul className='flex gap-1'>
+        <ul className='flex'>
           <li
             onClick={() => setTab(1)}
             className={`${
@@ -31,7 +31,7 @@ export default function Create() {
           {tab == 2 && (
             <li
               onClick={() => context.setTheme(!context.theme)}
-              className='px-4 cursor-pointer bg-slate-300 flex items-center'
+              className='px-4 mx-1 cursor-pointer bg-slate-300 flex items-center'
             >
               {context.theme ? <FiSun /> : <FaRegMoon />}
             </li>

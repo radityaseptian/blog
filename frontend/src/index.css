@@ -6,3 +6,16 @@
 .icon path {
   stroke: #fff;
 }
+
+@font-face {
+  font-family: 'poppins';
+  src: url('./assets/fonts/Poppins/Poppins-Bold.ttf');
+}
+@font-face {
+  font-family: 'patua';
+  src: url('./assets/fonts/Patua_One/PatuaOne-Regular.ttf');
+}
+@font-face {
+  font-family: 'source-sans';
+  src: url('./assets/fonts/Source_Sans_Pro/SourceSansPro-Regular.ttf');
+}

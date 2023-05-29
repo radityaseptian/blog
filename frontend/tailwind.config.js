@@ -17,6 +17,11 @@ export default {
       boxShadow: {
         custom: '0px 5px 20px rgba(0,0,0,.12)',
       },
+      fontFamily: {
+        'poppins': 'poppins',
+        'patua': 'patua',
+        'source-sans': 'source-sans'
+      }
     },
   },
   plugins: [],
