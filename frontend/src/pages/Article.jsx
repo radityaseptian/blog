@@ -17,7 +17,7 @@ export default function Article() {
   return (
     <>
       <ToTop />
-      <div>
+      <div className='bg-slate-100 dark:bg-zinc-700 dark:text-white transition duration-500'>
         <Navbar />
         <section className='min-h-screen pt-20'>
           <Container>

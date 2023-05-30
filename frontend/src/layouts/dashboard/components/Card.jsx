@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 export default function Card({ title, tag, read, href }) {
   return (
     <>
-      <div className='sm:max-w-sm hover:-translate-y-[3px] p-2 transition duration-500 bg-slate-100 rounded'>
+      <div className='sm:max-w-sm hover:-translate-y-[3px] p-2 transition duration-500 bg-white rounded'>
         <div className='p-2 pl-3'>
           <h3 className='text-lg'>{title}</h3>
           <div className='flex justify-between items-center flex-1 mt-3'>

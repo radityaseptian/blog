@@ -1,17 +1,15 @@
-// import img from '../../../../../../../../Downloads/portfolio.png'
-// import Code from '../components/Code'
-
-export default function generateNode(target, content) {
+/* eslint-disable no-case-declarations */
+export default function generateNode(target, content = '', optional) {
   if (content.length >= 3) {
     switch (target) {
       case 'title':
         return `<h1 class='text-4xl md:text-5xl leading-snug md:leading-tight font-semibold font-sans'>${content}</h1>`
       case 'paragraf-title':
-        return `<h2 class='pt-8 text-2xl font-semibold text-black'>${content}</h2>`
+        return `<h2 class='pt-8 text-2xl font-semibold text-black/90 dark:text-white/90 transition duration-500'>${content}</h2>`
       case 'paragraf':
-        return `<p class='pt-5 text-lg'>${content}</p>`
+        return `<p class='pt-5 text-lg [&>span]:bg-sky-200 [&>span]:dark:text-black/80 [&>a]:relative [&>a]:after:absolute [&>a]:after:bg-yellow-300 [&>a]:after:-bottom-1 [&>a]:after:left-0 [&>a]:after:-right-[1px] [&>a]:after:rounded-full [&>a]:after:top-[22px]'>${content}</p>`
       case 'read-time':
-        return `<div class='flex gap-8 items-center py-6 text-sm text-black/70'>
+        return `<div class='flex gap-8 items-center py-6 text-sm text-black/70 dark:text-white/80 transition duration-500'>
         <span>
           <i class='fa fa-calendar pr-1'></i>
           <span>
@@ -25,19 +23,21 @@ export default function generateNode(target, content) {
       </div>`
       case 'list':
         return `<li class='list-disc mt-2 ml-7'>${content}</li>`
+      // FOR PSEUDO NODE
+      case 'href:https://example.com text:example':
+        const href = `${content}`
+        const pola1 = /href:(\S+)/
+        const hasil1 = href.match(pola1)
+        const teks = `${content}`
+        const pola2 = /text:(\S+)/
+        const hasil2 = teks.match(pola2)
+        return `<a href='${hasil1[1]}' target='_blank'>${hasil2[1]}</a>`
+      case 'html, css, or javascript':
+        return `<div class='Code pt-2'><pre><code class='language-${optional}'>${content}</code></pre></div>`
+      case 'content for bg-text':
+        return `<span>${content}</span>`
+      // case "content for image, don't input if want empty":
+      //   return `<center><img src=${optional} /><i class='text-sm'>${content}</i></center>`
     }
   }
 }
-
-// <div className='flex gap-8 items-center py-6 text-sm text-black/70'>
-//   <div>
-//     <FontAwesomeIcon icon={faCalendar} class='text-black/70' />
-//     <span class='px-1'>
-//       ${new Date(Date.now()).toDateString().slice(4, 100)}
-//     </span>
-//   </div>
-//   <span>
-//     <FontAwesomeIcon icon={faClock} class='text-black/70' />
-//     <span class='px-1'>${content}</span>
-//   </span>
-// </div>

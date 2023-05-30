@@ -13,7 +13,7 @@ import {
 export default function Footer() {
   return (
     <>
-      <footer className='bg-zinc-200 py-6 mt-10'>
+      <footer className='bg-white dark:bg-zinc-800 transition duration-500 py-6 mt-10'>
         <Container>
           <section className='grid sm:grid-cols-2'>
             <div className='text-center sm:text-left pb-6'>
@@ -25,7 +25,7 @@ export default function Footer() {
                 programming.
               </p>
               <p className='text-sm pb-5'>&copy; 2023 Technology.com</p>
-              <Link to='/login' className='px-3 py-2 border-secondary border-[1.9px] text-secondary bg-slate-200 rounded'>
+              <Link to='/login' className='px-3 py-2 border-secondary border-[1.9px] text-secondary hover:bg-black/5 rounded'>
                 Login
               </Link>
             </div>
@@ -38,7 +38,7 @@ export default function Footer() {
                 <input
                   type='email'
                   id='email'
-                  className='px-2 sm:w-48 md:w-60 rounded border text-sm border-slate-400'
+                  className='px-2 sm:w-48 md:w-60 rounded border text-sm border-slate-400 dark:bg-zinc-900 transition duration-500'
                   placeholder='Enter your email...'
                 />
                 <Button>Subscribe</Button>

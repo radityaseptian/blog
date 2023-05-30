@@ -13,7 +13,7 @@ export default function Dashboard() {
     <>
       <section className='min-h-screen flex flex-col sm:flex-row gap-1 bg-slate-100'>
         <nav>
-          <ul className='sm:w-48 bg-red-300'>
+          <ul className='sm:w-48 bg-slate-300'>
             <li className='text-center py-4 bg-primary text-white'>
               @myblog
             </li>
@@ -21,7 +21,7 @@ export default function Dashboard() {
               <li
                 onClick={() => setNumber(1)}
                 className={`${
-                  number == 1 ? 'bg-primary text-white' : 'bg-slate-200'
+                  number == 1 ? 'bg-primary text-white' : 'bg-slate-100'
                 } flex items-center gap-2 cursor-pointer rounded px-4 py-2`}
               >
                 <GoDashboard />
@@ -30,7 +30,7 @@ export default function Dashboard() {
               <li
                 onClick={() => setNumber(2)}
                 className={`${
-                  number == 2 ? 'bg-primary text-white' : 'bg-slate-200'
+                  number == 2 ? 'bg-primary text-white' : 'bg-slate-100'
                 } flex items-center gap-2 cursor-pointer rounded px-4 py-2`}
               >
                 <GrDocumentStore className={number == 2 && 'icon'} />
@@ -39,7 +39,7 @@ export default function Dashboard() {
               <li
                 onClick={() => setNumber(3)}
                 className={`${
-                  number == 3 ? 'bg-primary text-white' : 'bg-slate-200'
+                  number == 3 ? 'bg-primary text-white' : 'bg-slate-100'
                 } flex items-center gap-2 cursor-pointer rounded px-4 py-2`}
               >
                 <ImBlog />

@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react'
+import { useState,useEffect,useContext } from 'react'
 import Editor from './tab/Editor'
 import Preview from './tab/Preview'
 import { FaRegMoon } from 'react-icons/fa'
@@ -6,8 +6,15 @@ import { FiSun } from 'react-icons/fi'
 import { ThemeContext } from '../../context/ThemeContext'
 
 export default function Create() {
-  const context = useContext(ThemeContext)
   const [tab, setTab] = useState(1)
+  const context = useContext(ThemeContext)
+  useEffect(() => {
+    if (context.theme) {  
+      document.documentElement.classList.add('dark')
+    } else {
+      document.documentElement.classList.remove('dark')
+    }
+  }, [context.theme])
   return (
     <>
       <nav>

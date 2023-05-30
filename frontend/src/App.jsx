@@ -10,17 +10,20 @@ import ArticleDetail from './pages/ArticleDetail'
 import Tag from './pages/Tag'
 import Dashboard from './pages/Dashboard'
 import Login from './pages/Login'
+import { useEffect, useState } from 'react'
 import { ThemeContext } from './context/ThemeContext'
-import { useState } from 'react'
 export default function App() {
-  const [theme, setTheme] = useState(false)
-  const value = {
+  const [theme, setTheme] = useState()
+  useEffect(() => {
+    setTheme(localStorage.getItem('theme') || false)
+  }, [])
+  const themeDefault = {
     theme,
     setTheme,
   }
   return (
     <>
-      <ThemeContext.Provider value={value}>
+      <ThemeContext.Provider value={themeDefault}>
         <Router>
           <Routes>
             <Route path='/' element={<Home />} />

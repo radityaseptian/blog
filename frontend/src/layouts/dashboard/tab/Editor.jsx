@@ -17,10 +17,13 @@ export default function Editor() {
     setValue(sessionStorage.getItem('select') || 'title')
     setContent(sessionStorage.getItem('content') || '')
     setShow(sessionStorage.getItem('show') || false)
-    setTarget(sessionStorage.getItem('target') || '')
     setPseudoValue(sessionStorage.getItem('pseudoValue') || '')
+    if (sessionStorage.getItem('target') != 'img') {
+      setTarget(sessionStorage.getItem('target') || '')
+    } else {
+      setShow(false)
+    }
   }, [])
-
   const select = (e) => {
     setValue(e.target.value)
     sessionStorage.setItem('select', e.target.value)
@@ -33,6 +36,15 @@ export default function Editor() {
   const handleTarget = (e) => {
     if (e.target.type != 'file') {
       imgRef.current.value = ''
+    } else {
+      setTarget(e.target.id)
+      setShow(false)
+      setContent('')
+      setPseudoValue('')
+      sessionStorage.removeItem('show')
+      sessionStorage.removeItem('content')
+      sessionStorage.removeItem('pseudoValue')
+      return
     }
     setShow(true)
     setTarget(e.target.id)
@@ -43,7 +55,17 @@ export default function Editor() {
     setPseudoValue(e.target.value)
     sessionStorage.setItem('pseudoValue', e.target.value)
   }
-  const addPseudo = () => {}
+  // Pseudo
+  const addPseudo = () => {
+    const result = generateNode(target, pseudoValue)
+    setContent(content + result)
+    sessionStorage.setItem('content', content + result)
+    setShow(false)
+    setPseudoValue('')
+    sessionStorage.removeItem('show')
+    sessionStorage.removeItem('target')
+    sessionStorage.removeItem('pseudoValue')
+  }
   const removePseudo = () => {
     setShow(false)
     setTarget('')
@@ -55,30 +77,56 @@ export default function Editor() {
 
   // FUNCTION NODE HANLDER
   const saveNode = () => {
-    context.push(generateNode(value, content))
-    setShow(false)
-    setValue('')
-    setTarget('')
-    setPseudoValue('')
-    setContent('')
-    sessionStorage.removeItem('show')
-    sessionStorage.removeItem('target')
-    sessionStorage.removeItem('select')
-    sessionStorage.removeItem('content')
-    sessionStorage.removeItem('pseudoValue')
+    if (target == 'img') {
+      const url = URL.createObjectURL(imgRef.current.files[0])
+      context.push(`<center><img id='img' src=${url} /></center>`)
+      imgRef.current.value = ''
+      setShow(false)
+      setValue('')
+      setTarget('')
+      setPseudoValue('')
+      setContent('')
+      sessionStorage.clear()
+      return
+    }
+
+    if (target == 'html, css, or javascript') {
+      context.push(generateNode(target, content, pseudoValue))
+      setShow(false)
+      setValue('')
+      setTarget('')
+      setPseudoValue('')
+      setContent('')
+      sessionStorage.clear()
+      return
+    }
+
+    if (content.length >= 3) {
+      context.push(generateNode(value, content))
+      setShow(false)
+      setValue('')
+      setTarget('')
+      setPseudoValue('')
+      setContent('')
+      sessionStorage.clear()
+    }
   }
   const removeNode = () => {
-    setContent('')
-    setShow(false)
-    setPseudoValue('')
-    setTarget('')
-    setValue('')
     context = []
-    sessionStorage.removeItem('show')
-    sessionStorage.removeItem('target')
-    sessionStorage.removeItem('select')
-    sessionStorage.removeItem('content')
-    sessionStorage.removeItem('pseudoValue')
+    sessionStorage.clear()
+    location.reload()
+  }
+  const createOne = async () => {
+    if (context.length >= 1) {
+      const url = 'http://localhost:3000/dashboard'
+      await fetch(url, {
+        method: 'POST',
+        body: JSON.stringify({ file: context }),
+      }).finally(() => {
+        sessionStorage.clear()
+        location.reload()
+      })
+    }
   }
 
   return (
@@ -91,9 +139,7 @@ export default function Editor() {
               value={value}
               className='p-2 rounded text-center cursor-pointer'
             >
-              <option value='title' selected>
-                Title
-              </option>
+              <option value='title'>Title</option>
               <option value='paragraf-title'>Paragraf-title</option>
               <option value='paragraf'>Paragraf</option>
               <option value='read-time'>Read-time</option>
@@ -102,7 +148,7 @@ export default function Editor() {
             <div className='flex gap-3 flex-wrap items-center text-sm'>
               <span
                 onClick={handleTarget}
-                id='href:www.example.com text:example'
+                id='href:https://example.com text:example'
                 className='bg-slate-100 px-3 py-2 rounded cursor-pointer'
               >
                 Link
@@ -119,7 +165,7 @@ export default function Editor() {
                 type='file'
                 ref={imgRef}
                 accept='image/*'
-                id="content for image, don't input if want empty"
+                id='img'
                 className='bg-slate-100 py-2 file:border-none file:bg-transparent cursor-pointer rounded'
               />
               <span
@@ -139,19 +185,24 @@ export default function Editor() {
             >
               Cancel
             </Button>
-            <Button className='bg-green-500 hover:bg-green-500/90'>
+            <Button
+              onClick={createOne}
+              className='bg-green-500 hover:bg-green-500/90'
+            >
               Create
             </Button>
           </div>
         </div>
         {show && (
           <div className='flex items-center gap-2 flex-wrap'>
-            <span
-              onClick={addPseudo}
-              className='cursor-pointer px-2 py-[.39rem] text-white bg-primary rounded text-sm'
-            >
-              Add
-            </span>
+            {target != 'html, css, or javascript' && (
+              <span
+                onClick={addPseudo}
+                className='cursor-pointer px-2 py-[.39rem] text-white bg-primary rounded text-sm'
+              >
+                Add
+              </span>
+            )}
             <span
               onClick={removePseudo}
               className='cursor-pointer px-2 py-[.39rem] text-white bg-red-500 rounded text-sm'

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 export default function Card({ children,title, href, tag, read }) {
   return (
     <>
-      <div className='sm:max-w-sm hover:-translate-y-[3px] p-2 transition duration-500 bg-slate-400 rounded'>
+      <div className='sm:max-w-sm hover:-translate-y-[3px] p-2 transition duration-500 bg-white dark:bg-zinc-800 shadow-custom rounded'>
         <div className='p-2 pl-3'>
           <Link to={href}>
             <h3 className='text-lg'>{title}</h3>
