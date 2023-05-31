@@ -1,7 +1,8 @@
-import expres from 'express'
-import { collection } from '../../databases/mongodb.js'
-const router = expres.Router()
+import express from 'express'
+import { collection, ObjectId } from '../../databases/mongodb.js'
 import { isAdmin } from '../middleware/isAdmin.js'
+
+const router = express.Router()
 
 // ======== Dashboard Admin ======== //
 
@@ -11,14 +12,26 @@ import { isAdmin } from '../middleware/isAdmin.js'
 // ==== GET
 router.get('/dashboard', (req, res) => {})
 
+router.get('/dashboard/post', async (req, res) => {
+  try {
+    const result = await collection.find({}).toArray()
+    res.json(result).status(200)
+  } catch (err) {
+    res
+      .json({
+        message: err,
+      })
+      .status(500)
+  }
+})
+
 // ==== POST
-router.post('/dashboard', (req, res) => {
-  console.log(req.body)
+router.post('/dashboard/post', (req, res) => {
   try {
     collection.insertOne(req.body)
-    res.json({ res: 'Success' })
+    res.status(200).json({ message: true })
   } catch (err) {
-    res.send(err)
+    res.json({ message: err }).status(500)
   }
 })
 
@@ -26,6 +39,16 @@ router.post('/dashboard', (req, res) => {
 router.put('/dashboard/:id', (req, res) => {})
 
 // ==== DELETE
-router.delete('/dashboard/:id', (req, res) => {})
+router.delete('/dashboard/:id', async (req, res) => {
+  const id = req.params.id
+  try {
+    await collection.deleteOne({ _id: new ObjectId(id) })
+    res.status(200).json({ message: true })
+  } catch (err) {
+    res.status(500).json({
+      message: err,
+    })
+  }
+})
 
 export { router }
