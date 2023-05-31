@@ -27,7 +27,7 @@ export default function Navbar() {
   useEffect(() => {
     const html = document.documentElement
     html.addEventListener('keydown', searchHandle)
-    // return html.removeEventListener('keydown', searchHandle)
+    return html.removeEventListener('keydown', searchHandle)
   }, [])
   const searchHandle = (e) => {
     e.preventDefault()

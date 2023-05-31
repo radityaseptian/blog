@@ -36,8 +36,6 @@ export default function generateNode(target, content = '', optional) {
         return `<div class='Code pt-2'><pre><code class='language-${optional}'>${content}</code></pre></div>`
       case 'content for bg-text':
         return `<span>${content}</span>`
-      // case "content for image, don't input if want empty":
-      //   return `<center><img src=${optional} /><i class='text-sm'>${content}</i></center>`
     }
   }
 }

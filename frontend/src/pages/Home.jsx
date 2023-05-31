@@ -8,8 +8,20 @@ import Card from '../components/Card'
 import { RiArrowRightSLine } from 'react-icons/ri'
 import { Link } from 'react-router-dom'
 import ToTop from '../components/ToTop'
+import { useEffect, useState } from 'react'
 
 export default function Home() {
+  const [article, setArticle] = useState([])
+  const url = 'http://localhost:3000'
+  const getArticle = async () => {
+    fetch(url)
+      .then((res) => res.json())
+      .then((res) => setArticle(res))
+  }
+  useEffect(() => {
+    getArticle()
+  }, [])
+
   return (
     <>
       <ToTop />
@@ -52,14 +64,16 @@ export default function Home() {
             </Link>
           </div>
           <Content>
-            <Card
-              href={'/article/lorem'}
-              read={'3 min read'}
-              tag={{ name: 'Bash', href: '/tag/bash' }}
-              title={'How to create github'}
-            >
-              Lorem ipsum dolor sit amet consectetur adipisicing elit
-            </Card>
+            {article &&
+              article.map((item) => {
+                return (
+                  <>
+                    <Card key={item._id} title={item.title} tag={item.tag} id={item._id} time={item.time}>
+                      {item.description}
+                    </Card>
+                  </>
+                )
+              })}
           </Content>
         </Container>
         <Footer />

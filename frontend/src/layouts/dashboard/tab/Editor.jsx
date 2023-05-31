@@ -11,6 +11,7 @@ export default function Editor() {
   const [pseudoValue, setPseudoValue] = useState('')
   const [target, setTarget] = useState('')
   const [show, setShow] = useState(false)
+  const [showConfirm, setShowConfirm] = useState(false)
   const imgRef = useRef()
 
   useEffect(() => {
@@ -116,18 +117,6 @@ export default function Editor() {
     sessionStorage.clear()
     location.reload()
   }
-  const createOne = async () => {
-    if (context.length >= 1) {
-      const url = 'http://localhost:3000/dashboard'
-      await fetch(url, {
-        method: 'POST',
-        body: JSON.stringify({ file: context }),
-      }).finally(() => {
-        sessionStorage.clear()
-        location.reload()
-      })
-    }
-  }
 
   return (
     <>
@@ -181,13 +170,13 @@ export default function Editor() {
             <Button onClick={saveNode}>Save</Button>
             <Button
               onClick={removeNode}
-              className='bg-red-500 hover:bg-red-500/90'
+              className='bg-red-500 hover:bg-red-600'
             >
               Cancel
             </Button>
             <Button
-              onClick={createOne}
-              className='bg-green-500 hover:bg-green-500/90'
+              onClick={() => setShowConfirm(!showConfirm)}
+              className='bg-green-500 hover:bg-green-600'
             >
               Create
             </Button>
@@ -226,6 +215,104 @@ export default function Editor() {
           className='px-2 py-1 rounded focus:outline-none flex-1'
         />
       </div>
+      {showConfirm && (
+        <Confirm onClick={() => setShowConfirm(!setShowConfirm)} />
+      )}
+    </>
+  )
+}
+
+function Confirm(props) {
+  const context = useContext(NodeContext)
+  const [title, setTitle] = useState('')
+  const [readTime, setReadTime] = useState('')
+  const [tag, setTag] = useState('')
+  const [description, setDescription] = useState('')
+
+  const createOne = async () => {
+    if (context.length <= 3) {
+      return
+    }
+    if (title.length >= 3 && tag.length >= 2 && description.length >= 5) {
+      const url = 'http://localhost:3000/dashboard/post'
+      const data = {
+        title,
+        description,
+        tag,
+        time: readTime,
+        article: context,
+      }
+      await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      }).finally(() => {
+        sessionStorage.clear()
+        location.reload()
+      })
+    }
+  }
+
+  return (
+    <>
+      <section className='absolute inset-0 grid place-content-center bg-white/20 backdrop-blur-sm p-32'>
+        <div className='bg-red-300 p-2 rounded'>
+          <label htmlFor='title' className='flex flex-col pt-2 gap-1'>
+            <span>Title:</span>
+            <input
+              type='text'
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              id='title'
+              placeholder='Input title article...'
+              className='p-2 focus:outline-none rounded'
+            />
+          </label>
+          <label htmlFor='description' className='flex flex-col pt-4 gap-1'>
+            <span>Description:</span>
+            <input
+              type='text'
+              id='description'
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              placeholder='Input description article...'
+              className='p-2 focus:outline-none rounded'
+            />
+          </label>
+          <label htmlFor='description' className='flex flex-col pt-4 gap-1'>
+            <span>Read Time:</span>
+            <input
+              type='text'
+              id='description'
+              value={readTime}
+              onChange={(e) => setReadTime(e.target.value)}
+              placeholder='Input description article...'
+              className='p-2 focus:outline-none rounded'
+            />
+          </label>
+          <label htmlFor='tag' className='flex flex-col pt-4 gap-1'>
+            <span>Tag:</span>
+            <input
+              type='text'
+              id='tag'
+              value={tag}
+              onChange={(e) => setTag(e.target.value)}
+              placeholder='Input tag article...'
+              className='p-2 focus:outline-none rounded gap-1'
+            />
+          </label>
+          <div className='flex justify-end gap-3 pt-6'>
+            <Button {...props} className='bg-red-500 hover:bg-red-600'>
+              Cancel
+            </Button>
+            <Button onClick={createOne} className='bg-green-500 hover:bg-green-600'>
+              Create
+            </Button>
+          </div>
+        </div>
+      </section>
     </>
   )
 }

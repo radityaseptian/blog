@@ -4,19 +4,32 @@ import Create from '../layouts/dashboard/Create'
 import { GoDashboard } from 'react-icons/go'
 import { ImBlog } from 'react-icons/im'
 import { GrDocumentStore } from 'react-icons/gr'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { PostContext } from '../layouts/dashboard/context/PostContext'
 
 export default function Dashboard() {
   const [number, setNumber] = useState(1)
+  const [post, setPost] = useState([])
+  const value = {
+    post,
+    setPost,
+  }
+  const url = 'http://localhost:3000/dashboard/post'
+  const getPost = async () => {
+    fetch(url)
+      .then((res) => res.json())
+      .then((res) => setPost(res))
+  }
+  useEffect(() => {
+    getPost()
+  }, [])
 
   return (
     <>
       <section className='min-h-screen flex flex-col sm:flex-row gap-1 bg-slate-100'>
         <nav>
           <ul className='sm:w-48 bg-slate-300'>
-            <li className='text-center py-4 bg-primary text-white'>
-              @myblog
-            </li>
+            <li className='text-center py-4 bg-primary text-white'>@myblog</li>
             <ul className='p-2 flex sm:flex-col gap-2'>
               <li
                 onClick={() => setNumber(1)}
@@ -49,9 +62,11 @@ export default function Dashboard() {
           </ul>
         </nav>
         <div className='flex-1'>
-          {number == 1 && <Default />}
-          {number == 2 && <Post />}
-          {number == 3 && <Create />}
+          <PostContext.Provider value={value}>
+            {number == 1 && <Default />}
+            {number == 2 && <Post />}
+            {number == 3 && <Create />}
+          </PostContext.Provider>
         </div>
       </section>
     </>
