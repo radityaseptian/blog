@@ -10,9 +10,9 @@ import { useState, useEffect } from 'react'
 
 export default function Article() {
   const [article, setArticle] = useState([])
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(1)
   const [button, setButton] = useState(true)
-  const url = `http://localhost:3000/article/?page=${count}`
+  const url = `http://localhost:3000/article?page=${count}`
   const loadMore = async () => {
     fetch(url)
       .then((res) => res.json())
@@ -41,17 +41,15 @@ export default function Article() {
               {article &&
                 article.map((item) => {
                   return (
-                    <>
-                      <Card
-                        key={item._id}
-                        title={item.title}
-                        id={item.id}
-                        tag={item.tag}
-                        time={item.time}
-                      >
-                        {item.description}
-                      </Card>
-                    </>
+                    <Card
+                      key={item._id}
+                      title={item.title}
+                      id={item.id}
+                      tag={item.tag}
+                      time={item.time}
+                    >
+                      {item.description}
+                    </Card>
                   )
                 })}
             </Content>

@@ -5,11 +5,11 @@ export default function generateNode(target, content = '', optional) {
       case 'title':
         return `<h1 class='text-4xl md:text-5xl leading-snug md:leading-tight font-semibold font-sans'>${content}</h1>`
       case 'paragraf-title':
-        return `<h2 class='pt-8 text-2xl font-semibold text-black/90 dark:text-white/90 transition duration-500'>${content}</h2>`
+        return `<h2 class='pt-9 text-2xl font-semibold text-black/90 dark:text-white/90 transition duration-500'>${content}</h2>`
       case 'paragraf':
-        return `<p class='pt-5 text-lg [&>span]:bg-sky-200 [&>span]:dark:text-black/80 [&>a]:relative [&>a]:after:absolute [&>a]:after:bg-yellow-300 [&>a]:after:-bottom-1 [&>a]:after:left-0 [&>a]:after:-right-[1px] [&>a]:after:rounded-full [&>a]:after:top-[22px]'>${content}</p>`
+        return `<p class='pt-6 text-lg [&>span]:bg-sky-200 [&>span]:dark:text-black/80 [&>a]:relative [&>a]:after:absolute [&>a]:after:bg-yellow-300 [&>a]:after:-bottom-1 [&>a]:after:left-0 [&>a]:after:-right-[1px] [&>a]:after:rounded-full [&>a]:after:top-[22px]'>${content}</p>`
       case 'read-time':
-        return `<div class='flex gap-8 items-center py-6 text-sm text-black/70 dark:text-white/80 transition duration-500'>
+        return `<div class='flex gap-8 items-center pt-6 pb-8 text-sm text-black/70 dark:text-white/80 transition duration-500'>
         <span>
           <i class='fa fa-calendar pr-1'></i>
           <span>
@@ -22,7 +22,7 @@ export default function generateNode(target, content = '', optional) {
         </span>
       </div>`
       case 'list':
-        return `<li class='list-disc mt-2 ml-7'>${content}</li>`
+        return `<li class='list-disc mt-3 ml-7'>${content}</li>`
       // FOR PSEUDO NODE
       case 'href:https://example.com text:example':
         const href = `${content}`

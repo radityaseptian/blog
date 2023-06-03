@@ -21,18 +21,19 @@ export default function Navbar() {
       localStorage.setItem('theme', true)
     } else {
       document.documentElement.classList.remove('dark')
+      localStorage.setItem('theme', false)
     }
   }, [context.theme])
 
   useEffect(() => {
-    const html = document.documentElement
-    html.addEventListener('keydown', searchHandle)
-    return html.removeEventListener('keydown', searchHandle)
+    window.addEventListener('keydown', searchHandle)
+
+    return () => window.removeEventListener('keydown', searchHandle)
   }, [])
   const searchHandle = (e) => {
     e.preventDefault()
-    const ctrl = e.code == 'ControlRight' || 'ControlLeft'
-    const k = e.code == 'KeyK'
+    const ctrl = e.code === 'ControlLeft'
+    const k = e.code === 'KeyK'
     if (ctrl && k) {
       setShowSearch(true)
     }
@@ -60,7 +61,7 @@ export default function Navbar() {
             <div className='flex gap-2 self-start'>
               <div
                 onClick={() => setShowSearch(!showSearch)}
-                className='flex items-center gap-2 md:px-2 dark:hover:bg-zinc-700 hover:bg-zinc-200 hover:-translate-y-1 transition duration-500 md:border md:py-1  rounded cursor-pointer'
+                className='flex items-center gap-2 md:px-2 md:dark:hover:bg-zinc-700 md:hover:bg-zinc-200 hover:-translate-y-1 transition duration-500 md:border md:py-1 dark:border-slate-600 rounded cursor-pointer'
               >
                 <BiSearchAlt className='box-content p-[7px] dark:hover:bg-zinc-700 hover:bg-zinc-200 hover:-translate-y-1 transition duration-500 rounded md:p-0 w-6 h-6 md:w-5 md:h-5' />
                 <div className='hidden md:flex gap-1'>
@@ -75,13 +76,13 @@ export default function Navbar() {
                 target='_blank'
                 rel='noopener noreferrer'
               >
-                <BsGithub className='box-content p-[7px] w-5 h-5 dark:hover:bg-zinc-700 hover:bg-zinc-200 hover:-translate-y-1 transition duration-500 md:border rounded cursor-pointer' />
+                <BsGithub className='box-content p-[7px] w-5 h-5 dark:hover:bg-zinc-700 hover:bg-zinc-200 hover:-translate-y-1 transition duration-500 md:border dark:border-slate-600 rounded cursor-pointer' />
               </a>
               <span onClick={() => context.setTheme(!context.theme)}>
                 {context.theme ? (
-                  <FiSun className='box-content p-[7px] w-5 h-5 dark:hover:bg-zinc-700 hover:bg-zinc-200 hover:-translate-y-1 transition duration-500 md:border rounded cursor-pointer' />
+                  <FiSun className='box-content p-[7px] w-5 h-5 dark:hover:bg-zinc-700 dark:border-slate-600 hover:bg-zinc-200 hover:-translate-y-1 transition duration-500 md:border rounded cursor-pointer' />
                 ) : (
-                  <FaRegMoon className='box-content p-[7px] w-5 h-5 dark:hover:bg-zinc-700 hover:bg-zinc-200 hover:-translate-y-1 transition duration-500 md:border rounded cursor-pointer' />
+                  <FaRegMoon className='box-content p-[7px] w-5 h-5  dark:hover:bg-zinc-700 hover:bg-zinc-200 hover:-translate-y-1 transition duration-500 md:border rounded cursor-pointer' />
                 )}
               </span>
             </div>
@@ -92,7 +93,7 @@ export default function Navbar() {
         <NavSlider onClick={() => setShowNavSlidder(!showNavSlidder)} />
       )}
       {showSearch && (
-        <section className='fixed inset-0 flex justify-center items-start bg-black/30 backdrop-blur-sm z-40'>
+        <section className='fixed inset-0 flex text-black justify-center items-start bg-black/30 backdrop-blur-sm z-40'>
           <div className='w-11/12 md:w-10/12 lg:w-[45rem] overflow-hidden mt-4 sm:mt-6 md:mt-8 lg:mt-28 bg-white rounded-lg'>
             <div className='flex flex-wrap gap-3 p-2 items-center bg-slate-200 border-b border-slate-400'>
               <BiSearchAlt className='box-content w-6 h-6 pl-1' />

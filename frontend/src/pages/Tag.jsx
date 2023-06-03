@@ -3,8 +3,26 @@ import Container from '../components/Container'
 import Footer from '../layouts/Footer'
 import TagContent from '../components/TagContent'
 import ToTop from '../components/ToTop'
+import { useEffect, useState } from 'react'
 
 export default function Tag() {
+  const [tag, setTag] = useState([])
+  const url = 'http://localhost:3000/tag'
+
+  useEffect(() => {
+    getTag()
+  }, [])
+
+  const getTag = async () => {
+    fetch(url)
+      .then((res) => res.json())
+      .then((res) => {
+        const keys = Object.keys(res)
+        const newTags = keys.map((key) => ({ key: key, count: res[key] }))
+        setTag([...tag, ...newTags])
+      })
+  }
+
   return (
     <>
       <ToTop />
@@ -19,11 +37,14 @@ export default function Tag() {
                 the tags & topics you might like...
               </p>
               <div className='flex gap-3 flex-wrap pt-8'>
-                <TagContent count={2}>linux</TagContent>
-                <TagContent count={2}>npm</TagContent>
-                <TagContent count={2}>javascript</TagContent>
-                <TagContent count={2}>nodejs</TagContent>
-                <TagContent count={2}>css</TagContent>
+                {tag &&
+                  tag.map((item, i) => {
+                    return (
+                      <TagContent key={i} count={item.count}>
+                        {item.key}
+                      </TagContent>
+                    )
+                  })}
               </div>
             </div>
           </Container>

@@ -10,13 +10,21 @@ import ArticleDetail from './pages/ArticleDetail'
 import Tag from './pages/Tag'
 import Dashboard from './pages/Dashboard'
 import Login from './pages/Login'
+import TagId from './pages/TagId'
 import { useEffect, useState } from 'react'
 import { ThemeContext } from './context/ThemeContext'
 export default function App() {
-  const [theme, setTheme] = useState()
+  const [theme, setTheme] = useState(false)
+
   useEffect(() => {
-    setTheme(localStorage.getItem('theme') || false)
+    const localTheme = localStorage.getItem('theme') || false
+    if (localTheme) {
+      setTheme(localTheme)
+    } else {
+      setTheme(false)
+    }
   }, [])
+
   const themeDefault = {
     theme,
     setTheme,
@@ -30,6 +38,7 @@ export default function App() {
             <Route path='article' element={<Article />} />
             <Route path='article/:id' element={<ArticleDetail />} />
             <Route path='tag' element={<Tag />} />
+            <Route path='tag/:slug' element={<TagId />} />
             <Route path='dashboard' element={<Dashboard />} />
             <Route path='login' element={<Login />} />
             <Route path='*' element={<Navigate to='/' />} />

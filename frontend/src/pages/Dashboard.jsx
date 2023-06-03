@@ -5,6 +5,7 @@ import { GoDashboard } from 'react-icons/go'
 import { ImBlog } from 'react-icons/im'
 import { GrDocumentStore } from 'react-icons/gr'
 import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import { PostContext } from '../layouts/dashboard/context/PostContext'
 
 export default function Dashboard() {
@@ -29,7 +30,9 @@ export default function Dashboard() {
       <section className='min-h-screen flex flex-col sm:flex-row gap-1 bg-slate-100'>
         <nav>
           <ul className='sm:w-48 bg-slate-300'>
-            <li className='text-center py-4 bg-primary text-white'>@myblog</li>
+            <li className='text-center py-4 bg-primary text-white'>
+              <Link to='/' className='p-1'>@myblog</Link>
+            </li>
             <ul className='p-2 flex sm:flex-col gap-2'>
               <li
                 onClick={() => setNumber(1)}

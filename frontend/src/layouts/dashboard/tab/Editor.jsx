@@ -227,6 +227,7 @@ function Confirm(props) {
   const [title, setTitle] = useState('')
   const [readTime, setReadTime] = useState('')
   const [tag, setTag] = useState('')
+  const [img, setImg] = useState({})
   const [description, setDescription] = useState('')
 
   const createOne = async () => {
@@ -235,19 +236,23 @@ function Confirm(props) {
     }
     if (title.length >= 3 && tag.length >= 2 && description.length >= 5) {
       const url = 'http://localhost:3000/dashboard/post'
-      const data = {
-        title,
-        description,
-        tag,
-        time: readTime,
-        article: context,
-      }
+      const formData = new FormData()
+      formData.append('title', title)
+      formData.append('description', description)
+      formData.append('tag', tag)
+      formData.append('image', img)
+      formData.append('article', context)
+      // const data = {
+      //   title,
+      //   description,
+      //   img,
+      //   tag,
+      //   time: readTime,
+      //   article: context,
+      // }
       await fetch(url, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
+        body: formData,
       }).finally(() => {
         sessionStorage.clear()
         location.reload()
@@ -258,7 +263,10 @@ function Confirm(props) {
   return (
     <>
       <section className='absolute inset-0 grid place-content-center bg-white/20 backdrop-blur-sm p-32'>
-        <div className='bg-red-300 p-2 rounded'>
+        <div className='bg-red-300 p-4 rounded'>
+          <h6 className='text-center text-xl py-2'>
+            All options are required!
+          </h6>
           <label htmlFor='title' className='flex flex-col pt-2 gap-1'>
             <span>Title:</span>
             <input
@@ -303,11 +311,24 @@ function Confirm(props) {
               className='p-2 focus:outline-none rounded gap-1'
             />
           </label>
+          <label htmlFor='img' className='flex flex-col pt-4 gap-1'>
+            <span>Image:</span>
+            <input
+              type='file'
+              name='image'
+              accept='image/*'
+              onChange={(e) => setImg(e.target.files[0])}
+              id='img'
+            />
+          </label>
           <div className='flex justify-end gap-3 pt-6'>
             <Button {...props} className='bg-red-500 hover:bg-red-600'>
               Cancel
             </Button>
-            <Button onClick={createOne} className='bg-green-500 hover:bg-green-600'>
+            <Button
+              onClick={createOne}
+              className='bg-green-500 hover:bg-green-600'
+            >
               Create
             </Button>
           </div>
