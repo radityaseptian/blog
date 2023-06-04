@@ -1,10 +1,10 @@
 import express from 'express'
 import cors from 'cors'
-import cookieParser from 'cookie-parser'
 import jwt from 'jsonwebtoken'
 import * as dotenv from 'dotenv'
 import { collection, ObjectId } from './databases/mongodb.js'
 import { router } from './src/routes/dashboard.js'
+import cookieParser from 'cookie-parser'
 
 // ==== Configuration
 dotenv.config()
@@ -13,13 +13,14 @@ const app = express()
 const corsOption = {
   origin: process.env.ORIGIN,
   optionsSuccessStatus: 200,
+  credentials: true, 
 }
 
 // ==== Global middleware
 app.use(cors(corsOption))
 app.use(express.json())
-app.use(express.urlencoded({ limit: '20mb', extended: true }))
 app.use(cookieParser())
+app.use(express.urlencoded({ limit: '20mb', extended: true }))
 app.use(express.static('upload'))
 app.use(router)
 
@@ -45,14 +46,18 @@ app.get('/search', (req, res) => {
   const keyw = req.query.keyw
   try {
     collection.content
-      .find({ title: { $regex: keyw } })
+      .find({ title: { $regex: keyw, $options: 'i' } })
       .limit(5)
       .toArray()
       .then((result) => {
         if (result.length == 0) {
           return res.json({ message: 'Not found!' }).status(404)
         }
-        res.json(result)
+        let data = []
+        result.forEach((item) => {
+          data.push({ title: item.title, _id: item._id })
+        })
+        res.json(data)
       })
   } catch (err) {
     res.json({ message: err }).status(500)
@@ -135,13 +140,12 @@ app.get('/login', (req, res) => {
   const token = req.cookies.token
   try {
     const verify = jwt.verify(token, process.env.KEY)
-    console.log(verify)
     if (verify) {
-      return res.status(200)
+      return res.status(200).json({ message: 'ok' })
     }
-    res.status(404)
+    res.status(404).json({message: 'Error Invalid Login!'})
   } catch (err) {
-    res.status(500).json({ message: err })
+    res.status(500).json(err)
   }
 })
 
@@ -159,9 +163,13 @@ app.post('/login', async (req, res) => {
           const token = jwt.sign({ username, password }, process.env.KEY, {
             expiresIn: '1h',
           })
-          res.cookie('token', token, { httpOnly: true })
+          res.cookie('token', token, {
+            httpOnly: true,
+            path: '/',
+          })
           return res.status(200).json({ message: 'ok' })
         }
+        res.json({ message: 'Error invalid login!' }).status(400)
       })
   } catch (err) {
     res.status(500).json({ message: err })

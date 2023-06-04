@@ -3,6 +3,7 @@ import { collection, ObjectId } from '../../databases/mongodb.js'
 import multer from 'multer'
 import { isAdmin } from '../middleware/isAdmin.js'
 import path from 'path'
+import cookieParser from 'cookie-parser'
 
 const storage = multer.diskStorage({
   destination: path.relative('', 'upload'),
@@ -20,13 +21,15 @@ const router = express.Router()
 // ======== Dashboard Admin ======== //
 
 // ==== validate middleware
-// router.use(isAdmin())
+router.use(cookieParser())
+router.use('/dashboard', isAdmin)
+
 // ==== GET
 router.get('/dashboard', async (req, res) => {})
 
 router.get('/dashboard/post', async (req, res) => {
   try {
-    const result = await collection.content.find().toArray()
+    const result = await collection.content.find().sort({ _id: -1 }).toArray()
     res.json(result).status(200)
   } catch (err) {
     res
