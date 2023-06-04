@@ -16,14 +16,22 @@ export default function Login() {
   }, [])
 
   const initLogin = async () => {
-    fetch(url).then((res) => console.log(res))
+    fetch(url, {
+      credentials: 'include',
+    }).then((res) => {
+      if (res.ok) {
+        navigate('/dashboard')
+      }
+    })
   }
 
   const login = async (e) => {
     setLoading(true)
     e.preventDefault()
+
     fetch(url, {
       method: 'POST',
+      credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
       },

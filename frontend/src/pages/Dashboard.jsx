@@ -5,10 +5,11 @@ import { GoDashboard } from 'react-icons/go'
 import { ImBlog } from 'react-icons/im'
 import { GrDocumentStore } from 'react-icons/gr'
 import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { PostContext } from '../layouts/dashboard/context/PostContext'
 
 export default function Dashboard() {
+  const navigate = useNavigate()
   const [number, setNumber] = useState(1)
   const [post, setPost] = useState([])
   const value = {
@@ -17,9 +18,14 @@ export default function Dashboard() {
   }
   const url = 'http://localhost:3000/dashboard/post'
   const getPost = async () => {
-    fetch(url)
+    fetch(url, { credentials: 'include' })
       .then((res) => res.json())
-      .then((res) => setPost(res))
+      .then((res) => {
+        if (res.message) {
+          return navigate('/')
+        }
+        setPost(res)
+      })
   }
   useEffect(() => {
     getPost()
@@ -31,7 +37,9 @@ export default function Dashboard() {
         <nav>
           <ul className='sm:w-48 bg-slate-300'>
             <li className='text-center py-4 bg-primary text-white'>
-              <Link to='/' className='p-1'>@myblog</Link>
+              <Link to='/' className='p-1'>
+                @myblog
+              </Link>
             </li>
             <ul className='p-2 flex sm:flex-col gap-2'>
               <li

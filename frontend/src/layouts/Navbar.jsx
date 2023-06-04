@@ -12,8 +12,10 @@ import { ThemeContext } from '../context/ThemeContext'
 export default function Navbar() {
   const [showSearch, setShowSearch] = useState(false)
   const [showNavSlidder, setShowNavSlidder] = useState(false)
-  const [searchValue, setSearchValue] = useState('')
+  const [searchItem, setSearchItem] = useState([])
+  const [notFound, setNotFound] = useState(false)
   const context = useContext(ThemeContext)
+  const url = 'http://localhost:3000/search?keyw='
 
   useEffect(() => {
     if (context.theme) {
@@ -25,18 +27,33 @@ export default function Navbar() {
     }
   }, [context.theme])
 
-  useEffect(() => {
-    window.addEventListener('keydown', searchHandle)
+  // useEffect(() => {
+  //   window.addEventListener('keydown', searchHandle)
 
-    return () => window.removeEventListener('keydown', searchHandle)
-  }, [])
-  const searchHandle = (e) => {
-    e.preventDefault()
-    const ctrl = e.code === 'ControlLeft'
-    const k = e.code === 'KeyK'
-    if (ctrl && k) {
-      setShowSearch(true)
-    }
+  //   return () => window.removeEventListener('keydown', searchHandle)
+  // }, [])
+  // const searchHandle = (e) => {
+  //   e.preventDefault()
+  //   const ctrl = e.code === 'ControlLeft'
+  //   const k = e.code === 'KeyK'
+  //   if (ctrl && k) {
+  //     setShowSearch(true)
+  //   }
+  // }
+
+  const getSearch = async (param) => {
+    setTimeout(() => {
+      fetch(`${url}${param}`)
+        .then((res) => res.json())
+        .then((res) => {
+          if (res.message) {
+            setSearchItem([])
+            return setNotFound(true)
+          }
+          setNotFound(false)
+          setSearchItem(res)
+        })
+    }, 500)
   }
 
   return (
@@ -46,7 +63,7 @@ export default function Navbar() {
           <div className='flex justify-between py-4 sm:py-3'>
             <div className='flex flex-row-reverse sm:flex-row items-center gap-3 sm:gap-6'>
               <Link to='/'>
-                <h2 className='text-lg first-letter:text-2xl'>Newsletter</h2>
+                <h2 className='text-lg first-letter:text-2xl'>Radwritter</h2>
               </Link>
               <ul className='hidden gap-4 sm:flex pt-1'>
                 <NavItem href='/'>Home</NavItem>
@@ -93,33 +110,44 @@ export default function Navbar() {
         <NavSlider onClick={() => setShowNavSlidder(!showNavSlidder)} />
       )}
       {showSearch && (
-        <section className='fixed inset-0 flex text-black justify-center items-start bg-black/30 backdrop-blur-sm z-40'>
-          <div className='w-11/12 md:w-10/12 lg:w-[45rem] overflow-hidden mt-4 sm:mt-6 md:mt-8 lg:mt-28 bg-white rounded-lg'>
-            <div className='flex flex-wrap gap-3 p-2 items-center bg-slate-200 border-b border-slate-400'>
+        <section className='fixed inset-0 flex text-black dark:text-white justify-center items-start bg-black/30 backdrop-blur-sm z-40'>
+          <div className='w-11/12 md:w-10/12 lg:w-[45rem] overflow-hidden mt-4 sm:mt-6 md:mt-8 lg:mt-28 bg-white dark:bg-zinc-700 rounded-lg'>
+            <div className='flex flex-wrap gap-3 p-2 items-center bg-white dark:bg-zinc-700 border-b border-slate-400'>
               <BiSearchAlt className='box-content w-6 h-6 pl-1' />
               <input
                 type='text'
                 placeholder='Search article...'
                 maxLength={50}
-                value={searchValue}
-                onChange={(e) => setSearchValue(e.target.value)}
+                onChange={(e) => getSearch(e.target.value)}
                 autoFocus
-                className='flex-1 py-2 bg-transparent focus:outline-none text-sm placeholder:text-black/70'
+                className='flex-1 py-2 bg-transparent focus:outline-none text-sm placeholder:text-black/70 dark:placeholder:text-white/70'
               />
               <span
-                onClick={() => setShowSearch(!showSearch)}
+                onClick={() => setShowSearch(false)}
                 className='bg-red-400 text-sm px-4 py-2 rounded text-white cursor-pointer'
               >
                 CLOSE
               </span>
             </div>
             <div className='p-2 flex flex-col gap-2'>
-              <Link className='p-2 bg-slate-200 rounded flex items-center justify-between'>
-                <span>Lorem ipsum dolor sit amet.</span>
-                <span className='text-sm bg-slate-300 py-1 px-2 rounded'>
-                  open
-                </span>
-              </Link>
+              {notFound ? (
+                <span className='text-sm py-2'>No results found</span>
+              ) : (
+                <>
+                  {searchItem &&
+                    searchItem.map((item) => {
+                      return (
+                        <Link
+                          to={`/article/${item._id}`}
+                          key={item._id}
+                          className='px-2 py-3 line-clamp-1 bg-slate-100 dark:bg-zinc-800 text-sm rounded flex items-center justify-between'
+                        >
+                          {item.title}
+                        </Link>
+                      )
+                    })}
+                </>
+              )}
             </div>
           </div>
         </section>

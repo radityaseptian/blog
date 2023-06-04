@@ -31,12 +31,12 @@ export default function Home() {
           <Container>
             <section className='pt-[4.125rem] pb-10 sm:pb-0 min-h-screen grid place-content-center sm:grid-cols-2 justify-between'>
               <div className='flex flex-col justify-center'>
-                <h1 className='text-4xl md:text-5xl'>
-                  Lorem ipsum<span className='text-secondary'>.com</span>
+                <h1 className='text-4xl md:text-5xl font-medium tracking-wide'>
+                  radwritter<span className='text-secondary'>.blog</span>
                 </h1>
                 <p className='py-4'>
                   Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Saepe, expedita autem! Consequuntur
+                  Saepe, expedita autem! Consequuntur futuristik
                 </p>
                 <span>
                   <Button>Explore</Button>

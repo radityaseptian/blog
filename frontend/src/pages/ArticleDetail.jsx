@@ -20,7 +20,12 @@ export default function ArticleDetail() {
       .then((res) => res.json())
       .then((res) => {
         if (html.length == 0) {
+          const url = res[0].image
+          const newImg = `<center><img id='img' src="http://localhost:3000/${url}" /></center>`
           res[0].article.forEach((item) => {
+            if (item.includes("id='img'")) {
+              return html += newImg
+            }
             html += item
           })
         }

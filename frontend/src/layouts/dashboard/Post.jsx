@@ -11,6 +11,7 @@ export default function Post() {
   const deletePost = async (id) => {
     await fetch(url + id, {
       method: 'DELETE',
+      credentials: 'include',
     }).finally(() => {
       const newPost = context.post.filter((list) => list._id != id)
       context.setPost(newPost)

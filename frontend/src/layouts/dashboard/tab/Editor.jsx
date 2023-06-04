@@ -241,17 +241,12 @@ function Confirm(props) {
       formData.append('description', description)
       formData.append('tag', tag)
       formData.append('image', img)
-      formData.append('article', context)
-      // const data = {
-      //   title,
-      //   description,
-      //   img,
-      //   tag,
-      //   time: readTime,
-      //   article: context,
-      // }
+      for (let i = 0; i < context.length; i++) {
+        formData.append('article', context[i])
+      }
       await fetch(url, {
         method: 'POST',
+        credentials: 'include',
         body: formData,
       }).finally(() => {
         sessionStorage.clear()
