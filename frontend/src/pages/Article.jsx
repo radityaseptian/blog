@@ -7,12 +7,14 @@ import Footer from '../layouts/Footer'
 import Button from '../components/Button'
 import ToTop from '../components/ToTop'
 import { useState, useEffect } from 'react'
+import { Helmet } from 'react-helmet'
 
 export default function Article() {
   const [article, setArticle] = useState([])
   const [count, setCount] = useState(1)
   const [button, setButton] = useState(true)
-  const url = `http://localhost:3000/article?page=${count}`
+  const baseUrl = import.meta.env.VITE_URL
+  const url = `${baseUrl}/article?page=${count}`
   const loadMore = async () => {
     fetch(url)
       .then((res) => res.json())
@@ -33,7 +35,18 @@ export default function Article() {
   return (
     <>
       <ToTop />
-      <div className='bg-slate-100 dark:bg-zinc-700 dark:text-white transition duration-500'>
+      <Helmet>
+        <meta charset='UTF-8' />
+        <meta
+          name='description'
+          content='Find and read article about tips and trick programming'
+        />
+        <meta name='keywords' content='News, technology, blog, programmer' />
+        <meta name='author' content='Raditya Septian' />
+        <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+        <title>Radwritter | Articles</title>
+      </Helmet>
+      <div className='bg-slate-100 dark:bg-zinc-900 dark:text-white transition duration-500'>
         <Navbar />
         <section className='min-h-screen pt-20'>
           <Container>

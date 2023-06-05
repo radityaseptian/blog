@@ -4,10 +4,12 @@ import Footer from '../layouts/Footer'
 import TagContent from '../components/TagContent'
 import ToTop from '../components/ToTop'
 import { useEffect, useState } from 'react'
+import { Helmet } from 'react-helmet'
 
 export default function Tag() {
   const [tag, setTag] = useState([])
-  const url = 'http://localhost:3000/tag'
+  const baseUrl = import.meta.env.VITE_URL
+  const url = `${baseUrl}/tag`
 
   useEffect(() => {
     getTag()
@@ -26,8 +28,19 @@ export default function Tag() {
   return (
     <>
       <ToTop />
+      <Helmet>
+        <meta charset='UTF-8' />
+        <meta
+          name='description'
+          content='Find articles more easily with the topic tags you like, Here are the tags & topics you might like'
+        />
+        <meta name='keywords' content='News, technology, blog, programmer' />
+        <meta name='author' content='Raditya Septian' />
+        <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+        <title>Radwritter | Tags</title>
+      </Helmet>
       <Navbar />
-      <div className='bg-slate-100 dark:bg-zinc-700 dark:text-white transition duration-500'>
+      <div className='bg-slate-100 dark:bg-zinc-900 dark:text-white transition duration-500'>
         <section className='min-h-screen pt-20 md:pt-24'>
           <Container>
             <div>

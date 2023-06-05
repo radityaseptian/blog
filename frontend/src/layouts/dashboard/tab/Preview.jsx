@@ -16,7 +16,7 @@ export default function Preview() {
       <div className='bg-slate-300 max-h-[calc(100vh-40px)] overflow-x-hidden'>
         <article
           dangerouslySetInnerHTML={{ __html: html }}
-          className='mx-auto p-4 max-w-xl md:max-w-3xl min-h-screen bg-white dark:bg-zinc-700 dark:text-white transition duration-500 text-black/80 text-lg'
+          className='mx-auto p-4 max-w-xl md:max-w-3xl min-h-screen bg-white dark:bg-zinc-900 dark:text-white transition duration-500 text-black/80 text-lg'
         ></article>
       </div>
     </>

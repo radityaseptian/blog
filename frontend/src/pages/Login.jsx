@@ -3,6 +3,7 @@ import Input from '../components/Input'
 import Button from '../components/Button'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { Helmet } from 'react-helmet'
 
 export default function Login() {
   const [username, setUsername] = useState('')
@@ -10,7 +11,8 @@ export default function Login() {
   const [response, setResponse] = useState('')
   const navigate = useNavigate()
   const [loading, setLoading] = useState(false)
-  const url = 'http://localhost:3000/login'
+  const baseUrl = import.meta.env.VITE_URL
+  const url = `${baseUrl}/login`
   useEffect(() => {
     initLogin()
   }, [])
@@ -49,8 +51,19 @@ export default function Login() {
 
   return (
     <>
+      <Helmet>
+        <meta charset='UTF-8' />
+        <meta
+          name='description'
+          content='Login For Admin Only - Radwritter Login'
+        />
+        <meta name='keywords' content='News, technology, blog, programmer' />
+        <meta name='author' content='Raditya Septian' />
+        <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+        <title>Radwritter | Login</title>
+      </Helmet>
       <Navbar />
-      <section className='grid place-content-center min-h-screen bg-slate-100 dark:bg-zinc-700 dark:text-white transition duration-500'>
+      <section className='grid place-content-center min-h-screen bg-slate-100 dark:bg-zinc-900 dark:text-white transition duration-500'>
         <form
           onSubmit={login}
           className='bg-white dark:bg-zinc-800 transition duration-500 text-2xl py-12 rounded'

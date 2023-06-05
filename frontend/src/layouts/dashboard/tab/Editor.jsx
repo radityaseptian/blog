@@ -235,7 +235,8 @@ function Confirm(props) {
       return
     }
     if (title.length >= 3 && tag.length >= 2 && description.length >= 5) {
-      const url = 'http://localhost:3000/dashboard/post'
+      const baseUrl = import.meta.env.VITE_URL
+      const url = `${baseUrl}/dashboard/post`
       const formData = new FormData()
       formData.append('title', title)
       formData.append('description', description)

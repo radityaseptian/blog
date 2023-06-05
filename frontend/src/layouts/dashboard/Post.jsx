@@ -6,7 +6,8 @@ import { PostContext } from './context/PostContext'
 
 export default function Post() {
   const context = useContext(PostContext)
-  const url = 'http://localhost:3000/dashboard/'
+  const baseUrl = import.meta.env.VITE_URL
+  const url = `${baseUrl}/dashboard/`
 
   const deletePost = async (id) => {
     await fetch(url + id, {

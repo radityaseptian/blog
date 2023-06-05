@@ -15,7 +15,9 @@ export default function Navbar() {
   const [searchItem, setSearchItem] = useState([])
   const [notFound, setNotFound] = useState(false)
   const context = useContext(ThemeContext)
-  const url = 'http://localhost:3000/search?keyw='
+  const baseUrl = import.meta.env.VITE_URL
+  console.log(baseUrl)
+  const url = `${baseUrl}/search?keyw=`
 
   useEffect(() => {
     if (context.theme) {
@@ -27,19 +29,16 @@ export default function Navbar() {
     }
   }, [context.theme])
 
-  // useEffect(() => {
-  //   window.addEventListener('keydown', searchHandle)
-
-  //   return () => window.removeEventListener('keydown', searchHandle)
-  // }, [])
-  // const searchHandle = (e) => {
-  //   e.preventDefault()
-  //   const ctrl = e.code === 'ControlLeft'
-  //   const k = e.code === 'KeyK'
-  //   if (ctrl && k) {
-  //     setShowSearch(true)
-  //   }
-  // }
+  useEffect(() => {
+    const searchHandle = (e) => {
+      if (e.ctrlKey && e.shiftKey && e.key === 'K') {
+        e.preventDefault()
+        setShowSearch(true)
+      }
+    }
+    window.addEventListener('keydown', searchHandle)
+    return () => window.removeEventListener('keydown', searchHandle)
+  }, [])
 
   const getSearch = async (param) => {
     setTimeout(() => {
@@ -63,9 +62,11 @@ export default function Navbar() {
           <div className='flex justify-between py-4 sm:py-3'>
             <div className='flex flex-row-reverse sm:flex-row items-center gap-3 sm:gap-6'>
               <Link to='/'>
-                <h2 className='text-lg first-letter:text-2xl'>Radwritter</h2>
+                <h2 className='text-xl pb-[.125rem] md:pb-[.130rem]'>
+                  Radwritter
+                </h2>
               </Link>
-              <ul className='hidden gap-4 sm:flex pt-1'>
+              <ul className='hidden gap-4 sm:flex'>
                 <NavItem href='/'>Home</NavItem>
                 <NavItem href='/article'>Article</NavItem>
                 <NavItem href='/tag'>Tag</NavItem>
@@ -83,8 +84,8 @@ export default function Navbar() {
                 <BiSearchAlt className='box-content p-[7px] dark:hover:bg-zinc-700 hover:bg-zinc-200 hover:-translate-y-1 transition duration-500 rounded md:p-0 w-6 h-6 md:w-5 md:h-5' />
                 <div className='hidden md:flex gap-1'>
                   <span>Search...</span>
-                  <span className='bg-slate-200/80 dark:bg-slate-200/20 transition duration-500 text-sm pt-[.125rem] px-1 rounded'>
-                    Ctrl+K
+                  <span className='bg-slate-200/80 dark:bg-slate-200/20 transition duration-500 text-xs pt-1 px-1 rounded'>
+                    Ctrl+Shift+K
                   </span>
                 </div>
               </div>
@@ -160,7 +161,7 @@ function NavSlider(props) {
   return (
     <>
       <div {...props} className='fixed inset-0 z-10 sm:hidden'>
-        <ul className='flex flex-col gap-6 p-4 fixed top-[4.1rem] left-0 w-40 rounded bg-white'>
+        <ul className='flex flex-col gap-6 p-4 fixed top-[4.1rem] left-0 w-40 rounded bg-white dark:bg-zinc-800'>
           <NavItem>Home</NavItem>
           <NavItem>Article</NavItem>
           <NavItem>Tag</NavItem>

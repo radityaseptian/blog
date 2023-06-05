@@ -9,10 +9,12 @@ import { RiArrowRightSLine } from 'react-icons/ri'
 import { Link } from 'react-router-dom'
 import ToTop from '../components/ToTop'
 import { useEffect, useState } from 'react'
+import { Helmet } from 'react-helmet'
 
 export default function Home() {
   const [article, setArticle] = useState([])
-  const url = 'http://localhost:3000'
+  const baseUrl = import.meta.env.VITE_URL
+  const url = `${baseUrl}/`
   const getArticle = async () => {
     fetch(url)
       .then((res) => res.json())
@@ -25,7 +27,18 @@ export default function Home() {
   return (
     <>
       <ToTop />
-      <div className='bg-slate-100 dark:bg-zinc-700 dark:text-white transition duration-500'>
+      <Helmet>
+        <meta charset='UTF-8' />
+        <meta
+          name='description'
+          content='Find and read article about tips and trick programming'
+        />
+        <meta name='keywords' content='News, technology, blog, programmer' />
+        <meta name='author' content='Raditya Septian' />
+        <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+        <title>Radwritter | Home</title>
+      </Helmet>
+      <div className='bg-slate-100 dark:bg-zinc-900 dark:text-white transition duration-500'>
         <header>
           <Navbar />
           <Container>
@@ -35,8 +48,7 @@ export default function Home() {
                   radwritter<span className='text-secondary'>.blog</span>
                 </h1>
                 <p className='py-4'>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Saepe, expedita autem! Consequuntur futuristik
+                Find various interesting articles about technology and tips & tricks about programming
                 </p>
                 <span>
                   <Button>Explore</Button>
@@ -71,7 +83,6 @@ export default function Home() {
                     key={item._id}
                     title={item.title}
                     tag={item.tag}
-                    id={item._id}
                     time={item.time}
                   >
                     {item.description}

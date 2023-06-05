@@ -7,6 +7,7 @@ import { GrDocumentStore } from 'react-icons/gr'
 import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { PostContext } from '../layouts/dashboard/context/PostContext'
+import { Helmet } from 'react-helmet'
 
 export default function Dashboard() {
   const navigate = useNavigate()
@@ -16,7 +17,8 @@ export default function Dashboard() {
     post,
     setPost,
   }
-  const url = 'http://localhost:3000/dashboard/post'
+  const baseUrl = import.meta.env.VITE_URL
+  const url = `${baseUrl}/dashboard/post`
   const getPost = async () => {
     fetch(url, { credentials: 'include' })
       .then((res) => res.json())
@@ -33,6 +35,17 @@ export default function Dashboard() {
 
   return (
     <>
+      <Helmet>
+        <meta charset='UTF-8' />
+        <meta
+          name='description'
+          content='Find and read article about tips and trick programming'
+        />
+        <meta name='keywords' content='News, technology, blog, programmer' />
+        <meta name='author' content='Raditya Septian' />
+        <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+        <title>Radwritter | Dashboard</title>
+      </Helmet>
       <section className='min-h-screen flex flex-col sm:flex-row gap-1 bg-slate-100'>
         <nav>
           <ul className='sm:w-48 bg-slate-300'>
