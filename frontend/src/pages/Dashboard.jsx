@@ -20,7 +20,12 @@ export default function Dashboard() {
   const baseUrl = import.meta.env.VITE_URL
   const url = `${baseUrl}/dashboard/post`
   const getPost = async () => {
-    fetch(url, { credentials: 'include' })
+    fetch(url, {
+      credentials: 'include',
+      headers: {
+        'Access-Control-Allow-Origin': 'origin',
+      },
+    })
       .then((res) => res.json())
       .then((res) => {
         if (res.message) {

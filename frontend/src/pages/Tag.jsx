@@ -16,7 +16,11 @@ export default function Tag() {
   }, [])
 
   const getTag = async () => {
-    fetch(url)
+    fetch(url, {
+      headers: {
+        'Access-Control-Allow-Origin': 'origin',
+      },
+    })
       .then((res) => res.json())
       .then((res) => {
         const keys = Object.keys(res)

@@ -20,6 +20,9 @@ export default function Login() {
   const initLogin = async () => {
     fetch(url, {
       credentials: 'include',
+      headers: {
+        'Access-Control-Allow-Origin': 'origin',
+      },
     }).then((res) => {
       if (res.ok) {
         navigate('/dashboard')
@@ -36,6 +39,7 @@ export default function Login() {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': 'origin',
       },
       body: JSON.stringify({ username, password }),
     })

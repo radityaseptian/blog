@@ -247,6 +247,9 @@ function Confirm(props) {
       }
       await fetch(url, {
         method: 'POST',
+        headers: {
+          'Access-Control-Allow-Origin': 'origin',
+        },
         credentials: 'include',
         body: formData,
       }).finally(() => {

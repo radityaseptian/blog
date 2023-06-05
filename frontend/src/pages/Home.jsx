@@ -16,7 +16,11 @@ export default function Home() {
   const baseUrl = import.meta.env.VITE_URL
   const url = `${baseUrl}/`
   const getArticle = async () => {
-    fetch(url)
+    fetch(url, {
+      headers: {
+        'Access-Control-Allow-Origin': 'origin',
+      },
+    })
       .then((res) => res.json())
       .then((res) => setArticle(res))
   }
