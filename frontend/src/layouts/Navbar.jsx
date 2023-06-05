@@ -16,7 +16,6 @@ export default function Navbar() {
   const [notFound, setNotFound] = useState(false)
   const context = useContext(ThemeContext)
   const baseUrl = import.meta.env.VITE_URL
-  console.log(baseUrl)
   const url = `${baseUrl}/search?keyw=`
 
   useEffect(() => {

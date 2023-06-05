@@ -43,9 +43,6 @@ export default function ArticleDetail() {
   }
   let html = ''
 
-  console.log(description)
-  console.log(title)
-
   return (
     <>
       <ToTop />
