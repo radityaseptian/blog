@@ -20,11 +20,7 @@ export default function ArticleDetail() {
     getArticle()
   }, [])
   const getArticle = async () => {
-    fetch(url, {
-      headers: {
-        'Access-Control-Allow-Origin': 'origin',
-      },
-    })
+    fetch(url)
       .then((res) => res.json())
       .then((res) => {
         setDescription(res[0].description)

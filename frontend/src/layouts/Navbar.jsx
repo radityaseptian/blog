@@ -41,11 +41,7 @@ export default function Navbar() {
 
   const getSearch = async (param) => {
     setTimeout(() => {
-      fetch(`${url}${param}`, {
-        headers: {
-          'Access-Control-Allow-Origin': 'origin',
-        },
-      })
+      fetch(`${url}${param}`)
         .then((res) => res.json())
         .then((res) => {
           if (res.message) {

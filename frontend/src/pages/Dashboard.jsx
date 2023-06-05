@@ -22,9 +22,6 @@ export default function Dashboard() {
   const getPost = async () => {
     fetch(url, {
       credentials: 'include',
-      headers: {
-        'Access-Control-Allow-Origin': 'origin',
-      },
     })
       .then((res) => res.json())
       .then((res) => {

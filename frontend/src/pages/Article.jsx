@@ -16,11 +16,7 @@ export default function Article() {
   const baseUrl = import.meta.env.VITE_URL
   const url = `${baseUrl}/article?page=${count}`
   const loadMore = async () => {
-    fetch(url, {
-      headers: {
-        'Access-Control-Allow-Origin': 'origin',
-      },
-    })
+    fetch(url)
       .then((res) => res.json())
       .then((res) => {
         if (res.length == 0) {

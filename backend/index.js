@@ -2,7 +2,7 @@ import express from 'express'
 import cors from 'cors'
 import jwt from 'jsonwebtoken'
 import * as dotenv from 'dotenv'
-import { collection, ObjectId } from './databases/mongodb.js'
+import { collection } from './databases/mongodb.js'
 import { router } from './src/routes/dashboard.js'
 import cookieParser from 'cookie-parser'
 

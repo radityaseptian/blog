@@ -18,11 +18,7 @@ export default function TagId() {
   }, [])
 
   const getTagId = async () => {
-    fetch(url, {
-      headers: {
-        'Access-Control-Allow-Origin': 'origin',
-      },
-    })
+    fetch(url)
       .then((res) => res.json())
       .then((res) => setArticle(res))
   }

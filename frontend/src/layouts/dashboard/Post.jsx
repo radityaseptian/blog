@@ -13,9 +13,6 @@ export default function Post() {
     await fetch(url + id, {
       method: 'DELETE',
       credentials: 'include',
-      headers: {
-        'Access-Control-Allow-Origin': 'origin',
-      },
     }).finally(() => {
       const newPost = context.post.filter((list) => list._id != id)
       context.setPost(newPost)
