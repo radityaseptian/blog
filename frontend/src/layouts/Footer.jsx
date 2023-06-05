@@ -20,11 +20,11 @@ export default function Footer() {
               <h6>
                 Radwritter<span>.blog</span>
               </h6>
-              <p className='py-4 pb-2 text-sm text-white/80'>
+              <p className='py-4 pb-2 text-sm text-black/80 dark:text-white/80 duration-500'>
                 Find information, articles, tips & tricks and tutorials about
                 programming.
               </p>
-              <p className='text-sm pb-5 text-white/80'>&copy; 2023 Radwritter</p>
+              <p className='text-sm pb-5 text-black/80 dark:text-white/80 duration-500'>&copy; 2023 Radwritter</p>
               <Link
                 to='/login'
                 className='px-3 py-2 border-secondary border-[1.9px] text-secondary hover:bg-black/5 rounded'
@@ -34,7 +34,7 @@ export default function Footer() {
             </div>
             <div className='text-center sm:text-left sm:pl-4'>
               <h6>Newsletter</h6>
-              <p className='pt-3 pb-4 text-sm text-white/80'>
+              <p className='pt-3 pb-4 text-sm text-black/80 dark:text-white/80 duration-500'>
                 Get the latest information and articles from Technology.com by
                 subscribing to the Newsletter directly to your email.
               </p>

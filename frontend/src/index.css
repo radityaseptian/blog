@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+  animation-duration: 0.5s;
+}
+
 /* FOR GR ICON */
 .icon path {
   stroke: #fff;

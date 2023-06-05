@@ -43,7 +43,7 @@ export default function Home() {
           <Navbar />
           <Container>
             <section className='pt-[4.125rem] pb-10 sm:pb-0 min-h-screen grid place-content-center sm:grid-cols-2 justify-between'>
-              <div className='flex flex-col justify-center'>
+              <div className='flex flex-col justify-center relative after:py-44 after:absolute after:opacity-20 after:duration-500 after:inset-0 after:-top-24 after:dark:opacity-10 after:sm:hidden after:bg-hero after:bg-contain after:bg-center after:bg-no-repeat'>
                 <h1 className='text-4xl md:text-5xl font-medium tracking-wide'>
                   radwritter<span className='text-secondary'>.blog</span>
                 </h1>
@@ -58,7 +58,7 @@ export default function Home() {
                 <img
                   src={svg}
                   alt='Hero Image'
-                  className=' lg:max-w-lg xl:max-w-xl'
+                  className=' lg:max-w-lg xl:max-w-xl hidden sm:block'
                 />
               </div>
             </section>

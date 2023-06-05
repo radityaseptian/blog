@@ -11,7 +11,7 @@ export default {
         primary: '#2564eb',
       },
       backgroundImage: {
-        'hero-pattern': "url('/search.svg')",
+        'hero': "url('/search.svg')",
       },
       boxShadow: {
         custom: '0px 2px 20px rgba(0,0,0,.05)',
