@@ -13,7 +13,7 @@ const app = express()
 const corsOption = {
   origin: process.env.ORIGIN,
   optionsSuccessStatus: 200,
-  credentials: true, 
+  credentials: true,
 }
 
 // ==== Global middleware
@@ -84,10 +84,10 @@ app.get('/article', (req, res) => {
 })
 
 app.get('/article/:id', (req, res) => {
-  const id = req.params.id
+  const name = req.params.id.split('-').join(' ')
   try {
     collection.content
-      .find({ _id: new ObjectId(id) })
+      .find({ title: { $regex: name, $options: 'i' } })
       .toArray()
       .then((result) => {
         res.status(200).json(result)
@@ -143,7 +143,7 @@ app.get('/login', (req, res) => {
     if (verify) {
       return res.status(200).json({ message: 'ok' })
     }
-    res.status(404).json({message: 'Error Invalid Login!'})
+    res.status(404).json({ message: 'Error Invalid Login!' })
   } catch (err) {
     res.status(500).json(err)
   }
@@ -166,6 +166,7 @@ app.post('/login', async (req, res) => {
           res.cookie('token', token, {
             httpOnly: true,
             path: '/',
+            maxAge: 60 * 60 * 1000,
           })
           return res.status(200).json({ message: 'ok' })
         }
