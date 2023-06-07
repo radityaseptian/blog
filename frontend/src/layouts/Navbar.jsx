@@ -159,11 +159,11 @@ export default function Navbar() {
 function NavSlider(props) {
   return (
     <>
-      <div {...props} className='fixed inset-0 z-10 sm:hidden'>
+      <div {...props} className='fixed inset-0 z-10 sm:hidden text-black dark:text-white'>
         <ul className='flex flex-col gap-6 p-4 fixed top-[4.1rem] left-0 w-40 rounded bg-white dark:bg-zinc-800'>
-          <NavItem>Home</NavItem>
-          <NavItem>Article</NavItem>
-          <NavItem>Tag</NavItem>
+          <NavItem href={'/'}>Home</NavItem>
+          <NavItem href={'/article'}>Article</NavItem>
+          <NavItem href={'/tag'}>Tag</NavItem>
         </ul>
       </div>
     </>
