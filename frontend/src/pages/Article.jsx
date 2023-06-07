@@ -19,8 +19,11 @@ export default function Article() {
     fetch(url)
       .then((res) => res.json())
       .then((res) => {
+        if (res.length < 12) {
+          setButton(false)
+        }
         if (res.length == 0) {
-          return setButton(false)
+          return
         }
         if (article.length == 0) {
           return setArticle(res)
