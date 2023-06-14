@@ -40,6 +40,7 @@ export default function Navbar() {
   }, [])
 
   const getSearch = async (param) => {
+    if (param.length < 2) return
     setTimeout(() => {
       fetch(`${url}${param}`)
         .then((res) => res.json())
@@ -159,7 +160,10 @@ export default function Navbar() {
 function NavSlider(props) {
   return (
     <>
-      <div {...props} className='fixed inset-0 z-10 sm:hidden text-black dark:text-white'>
+      <div
+        {...props}
+        className='fixed inset-0 z-10 sm:hidden text-black dark:text-white'
+      >
         <ul className='flex flex-col gap-6 p-4 fixed top-[4.1rem] left-0 w-40 rounded bg-white dark:bg-zinc-800'>
           <NavItem href={'/'}>Home</NavItem>
           <NavItem href={'/article'}>Article</NavItem>
