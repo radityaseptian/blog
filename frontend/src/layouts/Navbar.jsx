@@ -139,7 +139,7 @@ export default function Navbar() {
                     searchItem.map((item) => {
                       return (
                         <Link
-                          to={`/article/${item._id}`}
+                          to={`/article/${item.title.toLowerCase().split(' ').join('-')}`}
                           key={item._id}
                           className='px-2 py-3 line-clamp-1 bg-slate-100 dark:bg-zinc-800 text-sm rounded flex items-center justify-between'
                         >
@@ -156,7 +156,6 @@ export default function Navbar() {
     </>
   )
 }
-
 function NavSlider(props) {
   return (
     <>
