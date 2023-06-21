@@ -47,35 +47,33 @@ This is an example of how to list things you need to use the software and how to
 ### Installation
 
 1. Clone the repo
-
    ```sh
    git clone https://github.com/radityaseptian/blog.git
    ```
-
 2. `cd blog/frontend`
 3. Install NPM packages for frontend
    ```sh
    npm install
    ```
-4. `cd blog/backend`
-5. Install NPM packages for backend
-   ```sh
-   npm install
-   ```
-6. Running the program for frontend
+4. Running the program for frontend
    ```sh
    npm run dev
    ```
-7. See running programs
+5. See running programs
    ```sh
    http://localhost:5173
    ```
-8. Running the program for backend
+6. `cd blog/backend`
+7. Install NPM packages for backend
+   ```sh
+   npm install
+   ```
+7. Running the program for backend
    ```js
    node --watch index.js
    ```
-9. Backend program running on `http:localhost:3000`
-10. Create your `.env` file for backend, check example in `/backend/.env.example`
+8. Backend program running on `http:localhost:3000`
+9. Create your `.env` file for backend, check example in `/backend/.env.example`
 
 ## Contact
 
