@@ -1,13 +1,16 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import Navbar from '../layouts/Navbar'
 import Content from '../layouts/Content'
+import Footer from '../layouts/Footer'
+
 import Card from '../components/Card'
 import Container from '../components/Container'
-import Footer from '../layouts/Footer'
 import Button from '../components/Button'
 import ToTop from '../components/ToTop'
+
 import { useState, useEffect } from 'react'
 import { Helmet } from 'react-helmet'
+import Skeleton from 'react-loading-skeleton'
+import { arrayLength } from '../helper'
 
 export default function Article() {
   const [article, setArticle] = useState([])
@@ -54,7 +57,13 @@ export default function Article() {
         <section className='min-h-screen pt-20'>
           <Container>
             <Content>
-              {article &&
+              {article.length === 0 ? (
+                <>
+                  {arrayLength(12).map(() => {
+                    return <Skeleton className='h-40 sm:max-w-sm' />
+                  })}
+                </>
+              ) : (
                 article.map((item) => {
                   return (
                     <Card
@@ -67,7 +76,8 @@ export default function Article() {
                       {item.description}
                     </Card>
                   )
-                })}
+                })
+              )}
             </Content>
             <center className='pt-8'>
               {button && (

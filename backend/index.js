@@ -12,6 +12,7 @@ const PORT = process.env.PORT
 const app = express()
 const corsOption = {
   origin: process.env.ORIGIN,
+  // origin: 'http://localhost:5173',
   optionsSuccessStatus: 200,
   credentials: true,
 }
@@ -161,12 +162,12 @@ app.post('/login', async (req, res) => {
         }
         if (user[0].username == username && user[0].password == password) {
           const token = jwt.sign({ username, password }, process.env.KEY, {
-            expiresIn: '1h',
+            expiresIn: '1d',
           })
           res.cookie('token', token, {
             httpOnly: true,
             path: '/',
-            maxAge: 60 * 60 * 1000,
+            maxAge: 24 * 60 * 60 * 1000,
           })
           return res.status(200).json({ message: 'ok' })
         }

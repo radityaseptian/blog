@@ -1,10 +1,14 @@
 import Navbar from '../layouts/Navbar'
-import Container from '../components/Container'
 import Footer from '../layouts/Footer'
+
+import Container from '../components/Container'
 import TagContent from '../components/TagContent'
 import ToTop from '../components/ToTop'
+
 import { useEffect, useState } from 'react'
 import { Helmet } from 'react-helmet'
+import Skeleton from 'react-loading-skeleton'
+import { arrayLength } from '../helper'
 
 export default function Tag() {
   const [tag, setTag] = useState([])
@@ -50,14 +54,21 @@ export default function Tag() {
                 the tags & topics you might like...
               </p>
               <div className='flex gap-3 flex-wrap pt-8'>
-                {tag &&
+                {tag.length === 0 ? (
+                  <>
+                    {arrayLength(8).map(() => {
+                      return <Skeleton className='h-9 w-24' />
+                    })}
+                  </>
+                ) : (
                   tag.map((item, i) => {
                     return (
                       <TagContent key={i} count={item.count}>
                         {item.key}
                       </TagContent>
                     )
-                  })}
+                  })
+                )}
               </div>
             </div>
           </Container>

@@ -21,6 +21,7 @@
     "react-helmet": "^6.1.0",
     "react-hotkeys": "^2.0.0",
     "react-icons": "^4.8.0",
+    "react-loading-skeleton": "^3.3.1",
     "react-router-dom": "^6.11.2"
   },
   "devDependencies": {

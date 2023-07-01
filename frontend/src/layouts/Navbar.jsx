@@ -21,10 +21,8 @@ export default function Navbar() {
   useEffect(() => {
     if (context.theme) {
       document.documentElement.classList.add('dark')
-      localStorage.setItem('theme', true)
     } else {
       document.documentElement.classList.remove('dark')
-      localStorage.setItem('theme', false)
     }
   }, [context.theme])
 
@@ -139,7 +137,10 @@ export default function Navbar() {
                     searchItem.map((item) => {
                       return (
                         <Link
-                          to={`/article/${item.title.toLowerCase().split(' ').join('-')}`}
+                          to={`/article/${item.title
+                            .toLowerCase()
+                            .split(' ')
+                            .join('-')}`}
                           key={item._id}
                           className='px-2 py-3 line-clamp-1 bg-slate-100 dark:bg-zinc-800 text-sm rounded flex items-center justify-between'
                         >

@@ -241,6 +241,7 @@ function Confirm(props) {
       formData.append('title', title)
       formData.append('description', description)
       formData.append('tag', tag)
+      formData.append('time', readTime)
       formData.append('image', img)
       for (let i = 0; i < context.length; i++) {
         formData.append('article', context[i])

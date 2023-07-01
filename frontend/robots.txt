@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /dashboard/*
+
+Sitemap: https://radwritter.vercel.app/sitemap.xml

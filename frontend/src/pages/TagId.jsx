@@ -1,11 +1,16 @@
-import ToTop from '../components/ToTop'
 import Navbar from '../layouts/Navbar'
 import Content from '../layouts/Content'
-import { useParams } from 'react-router-dom'
-import { useEffect, useState } from 'react'
+import Footer from '../layouts/Footer'
+
+import ToTop from '../components/ToTop'
 import Card from '../components/Card'
 import Container from '../components/Container'
-import Footer from '../layouts/Footer'
+
+import { useParams } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+
+import { arrayLength } from '../helper'
+import Skeleton from 'react-loading-skeleton'
 
 export default function TagId() {
   const [article, setArticle] = useState([])
@@ -31,7 +36,13 @@ export default function TagId() {
         <div className='min-h-screen'>
           <Container>
             <Content>
-              {article &&
+              {article.length === 0 ? (
+                <>
+                  {arrayLength(8).map(() => {
+                    return <Skeleton className='h-40 sm:max-w-sm' />
+                  })}
+                </>
+              ) : (
                 article.map((item) => {
                   return (
                     <Card
@@ -44,7 +55,8 @@ export default function TagId() {
                       {item.description}
                     </Card>
                   )
-                })}
+                })
+              )}
             </Content>
           </Container>
         </div>

@@ -1,26 +1,32 @@
 import Navbar from '../layouts/Navbar'
+import Footer from '../layouts/Footer'
+import Content from '../layouts/Content'
+
 import Container from '../components/Container'
 import Button from '../components/Button'
-import Footer from '../layouts/Footer'
-import svg from '/search.svg'
-import Content from '../layouts/Content'
 import Card from '../components/Card'
-import { RiArrowRightSLine } from 'react-icons/ri'
-import { Link } from 'react-router-dom'
 import ToTop from '../components/ToTop'
+
+import { Link } from 'react-router-dom'
 import { useEffect, useState } from 'react'
+
 import { Helmet } from 'react-helmet'
+import Skeleton from 'react-loading-skeleton'
+import { RiArrowRightSLine } from 'react-icons/ri'
+import svg from '/search.svg'
+import { arrayLength } from '../helper.js'
 
 export default function Home() {
   const [article, setArticle] = useState([])
   const baseUrl = import.meta.env.VITE_URL
   const url = `${baseUrl}/`
-  const getArticle = async () => {
-    fetch(url)
-      .then((res) => res.json())
-      .then((res) => setArticle(res))
-  }
+
   useEffect(() => {
+    const getArticle = async () => {
+      fetch(url)
+        .then((res) => res.json())
+        .then((res) => setArticle(res))
+    }
     getArticle()
   }, [])
 
@@ -48,11 +54,12 @@ export default function Home() {
                   radwritter<span className='text-secondary'>.blog</span>
                 </h1>
                 <p className='py-4'>
-                Find various interesting articles about technology and tips & tricks about programming
+                  Find various interesting articles about technology and tips &
+                  tricks about programming
                 </p>
-                <span>
+                <Link to='/article'>
                   <Button>Explore</Button>
-                </span>
+                </Link>
               </div>
               <div className='mt-16 sm:mt-0'>
                 <img
@@ -76,7 +83,13 @@ export default function Home() {
             </Link>
           </div>
           <Content>
-            {article &&
+            {article.length === 0 ? (
+              <>
+                {arrayLength(8).map(() => {
+                  return <Skeleton className='h-40 sm:max-w-sm' />
+                })}
+              </>
+            ) : (
               article.map((item) => {
                 return (
                   <Card
@@ -88,7 +101,8 @@ export default function Home() {
                     {item.description}
                   </Card>
                 )
-              })}
+              })
+            )}
           </Content>
         </Container>
         <Footer />
